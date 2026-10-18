@@ -7,5 +7,6 @@ import { RequestsService } from "./requests.service.js";
   imports: [AuthModule],
   controllers: [RequestsController],
   providers: [RequestsService],
+  exports: [RequestsService],
 })
 export class RequestsModule {}

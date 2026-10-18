@@ -7,14 +7,16 @@ import { AuthModule } from "./auth/auth.module.js";
 import { AdminModule } from "./admin/admin.module.js";
 import { RequestsModule } from "./requests/requests.module.js";
 import { ProcessingModule } from "./processing/processing.module.js";
+import { ResultsModule } from "./results/results.module.js";
 @Module({
-  imports: [
-    PrismaModule,
-    AuthModule,
-    AdminModule,
-    RequestsModule,
-    ProcessingModule,
-  ],
+imports: [
+  PrismaModule,
+  AuthModule,
+  AdminModule,
+  RequestsModule,
+  ProcessingModule,
+  ResultsModule,
+],
   controllers: [AppController, HealthController],
   providers: [AppService],
 })
