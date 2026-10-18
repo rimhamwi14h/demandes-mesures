@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  REQUESTER
+  TEAM_MANAGER
+  COMPANY_CONTACT
+  TECHNICIAN
+}
+
+enum MeasurementType {
+  THICKNESS
+  ELECTRICAL_RESISTANCE
+  MICROSCOPY
+  SURFACE_ROUGHNESS
+  FLEXION
+}
+
+enum RequestStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  NOT_MEASURABLE
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(REQUESTER)
+  createdAt    DateTime @default(now())
+
+  teamId String?
+  team   Team?   @relation("TeamMembers", fields: [teamId], references: [id])
+
+  managedTeam Team? @relation("TeamManager")
+
+  companyId String?  @unique
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  requests MeasurementRequest[]
+
+  @@index([teamId])
+}
+
+model Team {
+  id   String @id @default(cuid())
+  name String @unique
+
+  members User[] @relation("TeamMembers")
+
+  managerId String? @unique
+  manager   User?   @relation("TeamManager", fields: [managerId], references: [id])
+}
+
+model Company {
+  id   String @id @default(cuid())
+  name String @unique
+
+  contact User?
+}
+
+model MeasurementRequest {
+  id              String          @id @default(cuid())
+  measurementType MeasurementType
+  desiredDate     DateTime        @db.Date
+  status          RequestStatus   @default(PENDING)
+
+  // Position facultative fixée par Julien pour modifier l'ordre.
+  queuePosition Int?
+
+  nonMeasurableReason String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  startedAt   DateTime?
+  completedAt DateTime?
+
+  requesterId String
+  requester   User   @relation(fields: [requesterId], references: [id])
+
+  samples Sample[]
+  result  Result?
+
+  @@index([requesterId])
+  @@index([status, desiredDate])
+}
+
+model Sample {
+  id          String  @id @default(cuid())
+  reference   String
+  description String?
+
+  requestId String
+  request   MeasurementRequest @relation(fields: [requestId], references: [id])
+
+  @@unique([requestId, reference])
+}
+
+model Result {
+  id          String   @id @default(cuid())
+  comment     String
+  publishedAt DateTime @default(now())
+
+  requestId String             @unique
+  request   MeasurementRequest @relation(fields: [requestId], references: [id])
+
+  files ResultFile[]
+}
+
+model ResultFile {
+  id           String @id @default(cuid())
+  originalName String
+  storageKey   String @unique
+  mimeType     String
+  size         Int
+
+  resultId String
+  result   Result @relation(fields: [resultId], references: [id])
+
+  @@index([resultId])
+}
