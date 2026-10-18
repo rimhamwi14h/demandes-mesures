@@ -30,6 +30,6 @@ import { TeamsController } from "./teams.controller.js";
   ],
   controllers: [AuthController, TeamsController],
   providers: [AuthService, JwtAuthGuard],
-  exports: [AuthService, JwtAuthGuard],
+  exports: [AuthService, JwtAuthGuard, JwtModule],
 })
 export class AuthModule {}
