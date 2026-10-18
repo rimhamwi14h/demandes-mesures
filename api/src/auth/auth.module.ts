@@ -4,6 +4,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AuthController } from "./auth.controller.js";
 import { AuthService } from "./auth.service.js";
 import { JwtAuthGuard } from "./jwt-auth.guard.js";
+import { TeamsController } from "./teams.controller.js";
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { JwtAuthGuard } from "./jwt-auth.guard.js";
       },
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, TeamsController],
   providers: [AuthService, JwtAuthGuard],
   exports: [AuthService, JwtAuthGuard],
 })

@@ -11,6 +11,7 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service.js";
 import { LoginDto } from "./dto/login.dto.js";
+import { RegisterDto } from "./dto/register.dto.js";
 import { JwtAuthGuard } from "./jwt-auth.guard.js";
 import type { AuthenticatedRequest } from "./auth.types.js";
 
@@ -20,6 +21,21 @@ export class AuthController {
     @Inject(AuthService)
     private readonly auth: AuthService,
   ) {}
+
+  @Post("register")
+  register(
+    @Body(
+      new ValidationPipe({
+        expectedType: RegisterDto,
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    body: RegisterDto,
+  ) {
+    return this.auth.register(body);
+  }
 
   @Post("login")
   @HttpCode(200)
