@@ -15,5 +15,51 @@ services:
       timeout: 5s
       retries: 10
 
+  api:
+    build:
+      context: ./api
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: "postgresql://mesures:mesures_dev@db:5432/demandes_mesures?schema=public"
+      JWT_SECRET: "${JWT_SECRET:-demo-only-demandes-mesures-jwt-secret-2026-change-before-public-deployment}"
+      SCHOOL_EMAIL_DOMAIN: "ecole.example"
+      SEED_TECHNICIAN_EMAIL: "julien@example.test"
+      SEED_TECHNICIAN_PASSWORD: "JulienDemo2026!"
+      UPLOAD_DIR: "/app/uploads"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api/uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    command:
+      - sh
+      - -c
+      - |
+        npx prisma migrate deploy --config prisma7.config.ts &&
+        npx prisma db seed --config prisma7.config.ts &&
+        exec node dist/main.js
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/health').then(r => process.exit(r.status === 200 ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  web:
+    build:
+      context: ./web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
 volumes:
   postgres_data:
