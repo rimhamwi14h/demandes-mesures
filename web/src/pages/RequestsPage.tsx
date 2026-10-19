@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api } from "../api";
 import { useAuth } from "../auth/AuthContext";
-import type {
-  MeasurementRequest,
-  RequestStatus,
-} from "../types";
+import type { MeasurementRequest, RequestStatus } from "../types";
 
 const STATUS_LABELS: Record<RequestStatus, string> = {
   PENDING: "En attente",
@@ -24,6 +22,7 @@ const MEASUREMENT_LABELS: Record<string, string> = {
 
 export function RequestsPage() {
   const { user } = useAuth();
+
   const [requests, setRequests] = useState<MeasurementRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,11 +38,11 @@ export function RequestsPage() {
       .then((data) => {
         if (active) setRequests(data);
       })
-      .catch((error: unknown) => {
+      .catch((cause: unknown) => {
         if (active) {
           setError(
-            error instanceof Error
-              ? error.message
+            cause instanceof Error
+              ? cause.message
               : "Impossible de charger les demandes.",
           );
         }
@@ -62,6 +61,7 @@ export function RequestsPage() {
       <div className="page-heading">
         <div>
           <p className="eyebrow">Suivi des mesures</p>
+
           <h1>
             {user?.role === "TECHNICIAN"
               ? "Toutes les demandes"
@@ -69,8 +69,16 @@ export function RequestsPage() {
                 ? "Mes demandes et celles de mon équipe"
                 : "Mes demandes"}
           </h1>
+
+          {user && user.role !== "TECHNICIAN" && (
+            <p>
+              <Link to="/requests/new">+ Nouvelle demande</Link>
+            </p>
+          )}
         </div>
+
         <button
+          type="button"
           className="secondary"
           disabled={loading}
           onClick={() => setAttempt((value) => value + 1)}
@@ -80,7 +88,12 @@ export function RequestsPage() {
       </div>
 
       {loading && <p role="status">Chargement des demandes…</p>}
-      {error && <p role="alert" className="error">{error}</p>}
+
+      {error && (
+        <p role="alert" className="error">
+          {error}
+        </p>
+      )}
 
       {!loading && !error && requests.length === 0 && (
         <div className="card">
@@ -93,31 +106,43 @@ export function RequestsPage() {
           <table>
             <thead>
               <tr>
-                <th>Mesure</th>
-                <th>Demandeur</th>
-                <th>Date souhaitée</th>
-                <th>Échantillons</th>
-                <th>Statut</th>
+                <th scope="col">Mesure</th>
+                <th scope="col">Demandeur</th>
+                <th scope="col">Date souhaitée</th>
+                <th scope="col">Échantillons</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Détail</th>
               </tr>
             </thead>
+
             <tbody>
               {requests.map((request) => (
                 <tr key={request.id}>
                   <td>
-                    {MEASUREMENT_LABELS[request.measurementType]
-                      ?? request.measurementType}
+                    {MEASUREMENT_LABELS[request.measurementType] ??
+                      request.measurementType}
                   </td>
+
                   <td>{request.requester.name}</td>
+
                   <td>
                     {new Intl.DateTimeFormat("fr-FR", {
                       timeZone: "UTC",
                     }).format(new Date(request.desiredDate))}
                   </td>
+
                   <td>{request.samples.length}</td>
+
                   <td>
                     <span className={`badge ${request.status}`}>
                       {STATUS_LABELS[request.status]}
                     </span>
+                  </td>
+
+                  <td>
+                    <Link to={`/requests/${request.id}`}>
+                      Consulter
+                    </Link>
                   </td>
                 </tr>
               ))}

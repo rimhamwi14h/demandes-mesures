@@ -11,6 +11,8 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { RequestsPage } from "./pages/RequestsPage";
 import type { Role } from "./types";
+import RequestEditorPage from "./pages/RequestEditorPage";
+import RequestDetailPage from "./pages/RequestDetailPage";
 
 const ROLE_LABELS: Record<Role, string> = {
   REQUESTER: "Demandeur",
@@ -58,6 +60,9 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route element={<Layout />}>
           <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/requests/new" element={<RequestEditorPage />} />
+          <Route path="/requests/:id" element={<RequestDetailPage />} />
+          <Route path="/requests/:id/edit" element={<RequestEditorPage />} />
         </Route>
       </Route>
 

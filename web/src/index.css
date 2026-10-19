@@ -138,3 +138,97 @@ tbody tr:last-child td { border-bottom: 0; }
   .site-header { padding: 16px; }
   .account { width: 100%; justify-content: space-between; }
 }
+.request-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-fields,
+.sample-fields {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  border: 1px solid #dbe3ea;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.form-fields legend,
+.sample-fields legend {
+  padding: 0 0.4rem;
+  font-weight: 600;
+}
+
+.request-form input,
+.request-form select,
+.request-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  border: 1px solid #b8c5d1;
+  border-radius: 8px;
+  background: white;
+  color: #172b3a;
+  font: inherit;
+}
+
+.request-form textarea {
+  resize: vertical;
+}
+
+.actions,
+.page-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-heading {
+  justify-content: space-between;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+button.danger {
+  background: #a32626;
+  color: white;
+}
+
+button.danger:hover {
+  background: #811d1d;
+}
+
+.request-summary {
+  display: grid;
+  grid-template-columns: minmax(100px, 160px) 1fr;
+  gap: 0.75rem 1rem;
+}
+
+.request-summary dt {
+  font-weight: 600;
+}
+
+.request-summary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.sample-list {
+  padding-left: 1.25rem;
+}
+
+.sample-list li {
+  padding: 0.5rem 0;
+}
+
+.preserve-lines {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.muted {
+  color: #526579;
+}
