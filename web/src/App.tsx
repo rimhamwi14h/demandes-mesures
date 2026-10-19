@@ -14,6 +14,7 @@ import type { Role } from "./types";
 import RequestEditorPage from "./pages/RequestEditorPage";
 import RequestDetailPage from "./pages/RequestDetailPage";
 import ProcessingPage from "./pages/ProcessingPage";
+import AdminPage from "./pages/AdminPage";
 
 const ROLE_LABELS: Record<Role, string> = {
   REQUESTER: "Demandeur",
@@ -42,6 +43,9 @@ function Layout() {
           {user?.role === "TECHNICIAN" && (
           <Link to="/processing">File d’attente</Link>
       )}
+          {user?.role === "TECHNICIAN" && (
+          <Link to="/admin">Administration</Link>
+          )}
           <button className="secondary" onClick={logout}>
             Se déconnecter
           </button>
@@ -63,10 +67,10 @@ export default function App() {
 
       <Route element={<RequireAuth />}>
         <Route element={<Layout />}>
-          <Route path="/requests" element={<RequestsPage />} /><Route path="/processing" element={<ProcessingPage />} />
-          <Route path="/requests/new" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} />
-          <Route path="/requests/:id" element={<RequestDetailPage />} /><Route path="/processing" element={<ProcessingPage />} />
-          <Route path="/requests/:id/edit" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} />
+          <Route path="/requests" element={<RequestsPage />} /><Route path="/processing" element={<ProcessingPage />} /><Route path="/admin" element={<AdminPage />} />
+          <Route path="/requests/new" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} /><Route path="/admin" element={<AdminPage />} />
+          <Route path="/requests/:id" element={<RequestDetailPage />} /><Route path="/processing" element={<ProcessingPage />} /><Route path="/admin" element={<AdminPage />} />
+          <Route path="/requests/:id/edit" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} /><Route path="/admin" element={<AdminPage />} />
         </Route>
       </Route>
 

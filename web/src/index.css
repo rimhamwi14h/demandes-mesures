@@ -283,3 +283,17 @@ button.danger:hover {
   overflow-wrap: anywhere;
   max-width: 100%;
 }
+.admin-sections {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.admin-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1rem;
+}
+
+.admin-team-grid .card {
+  margin: 0;
+}
