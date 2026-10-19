@@ -118,7 +118,9 @@ export default function RequestEditorPage() {
       <RequestForm
         key={id ?? "new"}
         initialValue={initialValue}
-        submitLabel={id ? "Enregistrer les modifications" : "Déposer la demande"}
+        submitLabel={
+          id ? "Enregistrer les modifications" : "Déposer la demande"
+        }
         cancelTo={id ? `/requests/${id}` : "/requests"}
         onSubmit={save}
       />

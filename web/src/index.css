@@ -252,3 +252,34 @@ button.danger:hover {
 .processing-panel .request-form {
   margin-top: 1rem;
 }
+.result-files {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.result-files li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #dbe3ea;
+  border-radius: 8px;
+  background: white;
+}
+
+.result-files strong {
+  overflow-wrap: anywhere;
+}
+
+.result-files p {
+  margin: 0.3rem 0 0;
+}
+
+.result-files button {
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}

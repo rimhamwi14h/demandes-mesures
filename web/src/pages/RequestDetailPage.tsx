@@ -4,6 +4,8 @@ import { api } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import type { MeasurementRequest } from "../types";
 import ProcessingActions from "../components/ProcessingActions";
+import ResultUpload from "../components/ResultUpload";
+import ResultViewer from "../components/ResultViewer";
 import {
   formatDate,
   measurementLabel,
@@ -145,6 +147,19 @@ export default function RequestDetailPage() {
          status={request.status}
          onUpdated={() => setAttempt((current) => current + 1)}
        />
+       {user?.role === "TECHNICIAN" && request.status === "IN_PROGRESS" && (
+       <ResultUpload
+        key={request.id}
+        requestId={request.id}
+        onPublished={() => setAttempt((current) => current + 1)}
+       />
+       )}
+       {request.status === "COMPLETED" && (
+       <ResultViewer
+         key={request.id}
+         requestId={request.id}
+        />
+       )}
       <h2>Échantillons</h2>
       <ul className="sample-list">
         {request.samples.map((sample) => (
