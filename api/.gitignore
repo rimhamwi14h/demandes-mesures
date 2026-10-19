@@ -5,4 +5,6 @@ node_modules
 /generated/prisma
 /api/generated/
 /api/src/generated/
+uploads/
 !.env.example
+*.tsbuildinfo
