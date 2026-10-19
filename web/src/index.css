@@ -232,3 +232,23 @@ button.danger:hover {
 .muted {
   color: #526579;
 }
+.queue-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.queue-buttons button {
+  min-width: 2.5rem;
+}
+
+.processing-panel {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid #dbe3ea;
+  border-radius: 10px;
+  background: #f6f9fc;
+}
+
+.processing-panel .request-form {
+  margin-top: 1rem;
+}

@@ -13,6 +13,7 @@ import { RequestsPage } from "./pages/RequestsPage";
 import type { Role } from "./types";
 import RequestEditorPage from "./pages/RequestEditorPage";
 import RequestDetailPage from "./pages/RequestDetailPage";
+import ProcessingPage from "./pages/ProcessingPage";
 
 const ROLE_LABELS: Record<Role, string> = {
   REQUESTER: "Demandeur",
@@ -38,6 +39,9 @@ function Layout() {
               {user ? ROLE_LABELS[user.role] : ""}
             </small>
           </div>
+          {user?.role === "TECHNICIAN" && (
+          <Link to="/processing">File d’attente</Link>
+      )}
           <button className="secondary" onClick={logout}>
             Se déconnecter
           </button>
@@ -59,10 +63,10 @@ export default function App() {
 
       <Route element={<RequireAuth />}>
         <Route element={<Layout />}>
-          <Route path="/requests" element={<RequestsPage />} />
-          <Route path="/requests/new" element={<RequestEditorPage />} />
-          <Route path="/requests/:id" element={<RequestDetailPage />} />
-          <Route path="/requests/:id/edit" element={<RequestEditorPage />} />
+          <Route path="/requests" element={<RequestsPage />} /><Route path="/processing" element={<ProcessingPage />} />
+          <Route path="/requests/new" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} />
+          <Route path="/requests/:id" element={<RequestDetailPage />} /><Route path="/processing" element={<ProcessingPage />} />
+          <Route path="/requests/:id/edit" element={<RequestEditorPage />} /><Route path="/processing" element={<ProcessingPage />} />
         </Route>
       </Route>
 

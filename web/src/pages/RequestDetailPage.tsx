@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api } from "../api";
 import { useAuth } from "../auth/AuthContext";
 import type { MeasurementRequest } from "../types";
+import ProcessingActions from "../components/ProcessingActions";
 import {
   formatDate,
   measurementLabel,
@@ -138,7 +139,12 @@ export default function RequestDetailPage() {
           </p>
         </div>
       )}
-
+      <ProcessingActions
+         key={`${request.id}-${request.status}`}
+         requestId={request.id}
+         status={request.status}
+         onUpdated={() => setAttempt((current) => current + 1)}
+       />
       <h2>Échantillons</h2>
       <ul className="sample-list">
         {request.samples.map((sample) => (
