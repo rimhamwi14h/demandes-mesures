@@ -68,26 +68,26 @@ and at the end, Julien did not mention that payment or Invoicing are one of the 
 - **Evidence:** [Commit d28b5c5 — Request management and access filtering](https://github.com/rimhamwi14h/demandes-mesures/commit/d28b5c5), particularly `api/src/requests/requests.service.ts`.
 
 ### Decision 3 - Keep non measurable requests in the history
-- **Choice:** Preserve a non measurable requets with a mandatory explanation. A replacement sample must be submitted through a new request.
-- **Alternative not implemented:** Deleting the unsuccessful request or replacing its samples within the same request.
-- **Why:** Julien asked to keep a record of unsuccessful measurments. Preserving the original request keeps the samples and the explanation together. Creating a separate request for the replacement avoid losing information about the previous attempt.
+- **Choice:** Julien marks a measure as not measurable and has to write a reason so if the requester wants to try again he should send a new request with a new sample.
+- **Alternative not implemented:** Deleting the request or replacing the sample inside the same request.
+- **Why:** Julien told us that he wants to keep a trace of what happened so if a new request was created, it leaves the first try and its reason untouched so nothing gets lost.
 - **Evidence:** [Commit 00af1ef — Processing and non-measurable requests](https://github.com/rimhamwi14h/demandes-mesures/commit/00af1ef) and [the client’s clarification about replacement samples](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
 
 ### Decision 4 - Link completion to successful result publication
-- **Choice:** Mark a request as completed when Julien successfuly publishes it result files and comment.
-- **Alternative not implemented:** A separate completion action that could mark the request as finish before its result is available.
-- **Why:** Juliens problem was that he sometimes did the measurment but the result never reached the requester.Now a request becomes complet only when its result is published in the application, so a completed request always has a result available. Julien confirmed that he does not need to wait for the requester to download it
+- **Choice:** When julien published the files and his comment, the request becomes "completed".
+- **Alternative not implemented:** A separate "complete" button could mark the request as done before any result exists.
+- **Why:** Juliens problem was that he sometimes did the measurment but the result never reached the requester, this way a completed request always has a result waiting.
 - **Evidence:** `api/src/results/results.service.ts`, [commit 7ac7795 — Result publication and downloading in React](https://github.com/rimhamwi14h/demandes-mesures/commit/7ac7795), and [the client discussion](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
 
 ### Decision 5 - Prepare the database automatically during Docker startup
-- **Choice:** Apply existing Prisma migration and run the initialization script before starting the API through Docker Compose.
-- **Alternative not implemented:** Requiring additional manual commands to create the database structure,teams and technician account after starting the containers.
-- **Why:** The application must start from a fresh clone using docker compose up.Automatic preparation makes the database structure, six teams and Juliens account available without depending on our development database. The initialization script can be executed again without duplicating these initial records.
+- **Choice:** When the project starts docker compose creates the tables and adds the six teams and juliens account and then starts the api.
+- **Alternative not implemented:** Asking people to run a few commands by hand after starting the containers.
+- **Why:** We wanted anyone to be able to clone the project and run docker compuse up without adding anything.The setup script can also run twice without creating duplicates.
 - **Evidence:** [Commit 8c75a70 — Complete Docker Compose startup](https://github.com/rimhamwi14h/demandes-mesures/commit/8c75a70), particularly `compose.yaml`, together with `api/prisma/seed.ts`.
 
 ## 4. An AI proposal we revised 
-### Initial proposal for testing result publication
-- **Assistants proposal:** the assistant generated tests that selected a file using user.upload() and submited the result form by clicking the publication button using user.click()'
-- **Why we did not retain it unchanged:** Both tests failed in our test enviroment.The selected filename appeared in the interface, but the mocked API was not called.In the error-handling test, the expected error message did not appear either.These observations susggested that the form was not reaching the publication handler.An interaction with native file-input validation was suspected but we did not establish the exact cause.
-- **Decision taken instead:** Following the diagnosis and another suggestion from the assistant, we checked that a file was selected and triggered the forms submit event directly usingfireEvent.submit(form).The tests then checked the publication handler: the request URL, the HTTP method, the files and comment sent throutgh FromData, and the handling of an API error. Because direct submission bypasses the real button submission path, we also check publication and downloading mannually in the browser.
+### Tests for result publication
+- **Assistants proposal:** the assistant wrote tests that selected a file with user.upload() and then clicked the publish button with user.click() to submit.
+- **Why we did not retain it unchanged:** Both tests failed.The filename appeared on screen but the mocked API was not called.In the error test, the expected error message did not appear also.it looked like the form wasnt reaching the publish handler.We suspected the browsers built in file validation but we never confirmed it.
+- **Decision taken:** Following another suggestion from the assistant, we checked that a file was selected and submitted the forms directly with fireEvent.submit(form).The tests now check the URL, the HTTP method, the files and comment sent in FromData, and the handling of an API error.Since this skips the real button click, we also tried publishing and downloading by hand in the browser.
 -  **Evidence:** `web/src/components/ResultUpload.spec.tsx`, included in [commit 7ac7795](https://github.com/rimhamwi14h/demandes-mesures/commit/7ac7795). 
