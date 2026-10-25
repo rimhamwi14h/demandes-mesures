@@ -56,7 +56,38 @@ and at the end, Julien did not mention that payment or Invoicing are one of the 
 
 ## 3. Decision log
 ### Decision 1 - Combine default priorities with manual ordering
-- **Choice:** Provide a default order that prioritizes company requests, followed with the requested dates, while allowing Julien to change the order manually.
+- **Choice:** Provide a default order that prioritize company requests, followed with the requested dates, while allowing Julien to change the order manually.
 - **Alternative not implemented:** A fixed automatic order that the technician cannot adjust.
-- **Why:** Julien explained that companies have contractual deadlines, but he also needs to organize measurments according to his knowledge of the equipement.
+- **Why:** Julien ex'plained that companies have contractual deadlines, but he also needs to organize measurments according to his knowledge of the equipement.
 - **Evidence:** [Commit 00af1ef — Prioritization, ordering and processing](https://github.com/rimhamwi14h/demandes-mesures/commit/00af1ef) and [the client discussion](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
+
+### Decision 2 - Enforce access permission in the backend
+- **Choice:** Check permissions in the API and filter requets according to the authenticate user, their role and their team.
+- **Alternative not implemented:** Relying only on hiding unauthorized buttons or pages in the React interface.
+- **Why:** A user can send HTTP request without using the interface. Hiding a button would not prevent unauthorized access. The backend cheks which requests the user can read or modify.A team manager can consult their teams requests but can not modify another members request. Company contacts can access only their own requests. 
+- **Evidence:** [Commit d28b5c5 — Request management and access filtering](https://github.com/rimhamwi14h/demandes-mesures/commit/d28b5c5), particularly `api/src/requests/requests.service.ts`.
+
+### Decision 3 - Keep non measurable requests in the history
+- **Choice:** Preserve a non measurable requets with a mandatory explanation. A replacement sample must be submitted through a new request.
+- **Alternative not implemented:** Deleting the unsuccessful request or replacing its samples within the same request.
+- **Why:** Julien asked to keep a record of unsuccessful measurments. Preserving the original request keeps the samples and the explanation together. Creating a separate request for the replacement avoid losing information about the previous attempt.
+- **Evidence:** [Commit 00af1ef — Processing and non-measurable requests](https://github.com/rimhamwi14h/demandes-mesures/commit/00af1ef) and [the client’s clarification about replacement samples](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
+
+### Decision 4 - Link completion to successful result publication
+- **Choice:** Mark a request as completed when Julien successfuly publishes it result files and comment.
+- **Alternative not implemented:** A separate completion action that could mark the request as finish before its result is available.
+- **Why:** Juliens problem was that he sometimes did the measurment but the result never reached the requester.Now a request becomes complet only when its result is published in the application, so a completed request always has a result available. Julien confirmed that he does not need to wait for the requester to download it
+- **Evidence:** `api/src/results/results.service.ts`, [commit 7ac7795 — Result publication and downloading in React](https://github.com/rimhamwi14h/demandes-mesures/commit/7ac7795), and [the client discussion](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
+
+### Decision 5 - Prepare the database automatically during Docker startup
+- **Choice:** Apply existing Prisma migration and run the initialization script before starting the API through Docker Compose.
+- **Alternative not implemented:** Requiring additional manual commands to create the database structure,teams and technician account after starting the containers.
+- **Why:** The application must start from a fresh clone using docker compose up.Automatic preparation makes the database structure, six teams and Juliens account available without depending on our development database. The initialization script can be executed again without duplicating these initial records.
+- **Evidence:** [Commit 8c75a70 — Complete Docker Compose startup](https://github.com/rimhamwi14h/demandes-mesures/commit/8c75a70), particularly `compose.yaml`, together with `api/prisma/seed.ts`.
+
+## 4. An AI proposal we revised 
+### Initial proposal for testing result publication
+- **Assistants proposal:** the assistant generated tests that selected a file using user.upload() and submited the result form by clicking the publication button using user.click()'
+- **Why we did not retain it unchanged:** Both tests failed in our test enviroment.The selected filename appeared in the interface, but the mocked API was not called.In the error-handling test, the expected error message did not appear either.These observations susggested that the form was not reaching the publication handler.An interaction with native file-input validation was suspected but we did not establish the exact cause.
+- **Decision taken instead:** Following the diagnosis and another suggestion from the assistant, we checked that a file was selected and triggered the forms submit event directly usingfireEvent.submit(form).The tests then checked the publication handler: the request URL, the HTTP method, the files and comment sent throutgh FromData, and the handling of an API error. Because direct submission bypasses the real button submission path, we also check publication and downloading mannually in the browser.
+-  **Evidence:** `web/src/components/ResultUpload.spec.tsx`, included in [commit 7ac7795](https://github.com/rimhamwi14h/demandes-mesures/commit/7ac7795). 
