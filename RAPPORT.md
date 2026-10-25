@@ -21,5 +21,5 @@ we will now do a summary of what we asked Julien and what he told us in order to
 **Accounts**: Researchers and students create their own accounts using their school email address and when they are registering, they pick which of the six research teams they are, Julien chooses one person from each team and assigns him as a manager of the team , Julien also make accounts for company contacts, since he already knows the four partner companies
 **Completion**: a request become complete when Julien publishes its result
 **Unmeasurable samples**: The old request recorded as “not measurable” and the requester has to create a new request for the new replacement sample
-all of this discussion was made with Julien here:https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18
+all of this discussion was made with Julien here: https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18
 
