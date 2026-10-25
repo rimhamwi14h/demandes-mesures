@@ -10,12 +10,12 @@ he said that in the first message : "Je ne sais jamais par quoi commencer, ni o�
 
 That is why we started asking Julien questions in the discussion in order to transform this big problem into precise requirements
 we will now do a summary of what we asked Julien and what he told us in order to understand what he wanted
-**who submit the requests?**: the clients(Not Julien)
+**who submit the requests?**: the requesters(Not Julien), that told us that we need an interface for the requesters in order to request and an interface for Julien in order to follow them and decide priority and publish results
 **what infos needed to process the request?**:the samples to measure, deadline and the type of measurement they want
 **Priorities:** Julien decides the order
-**Processing stages**: Recieved, started, completed; a request can become impossible if damaged, and Julien must tell the requester and explain for him why?
-**Who performs the measurements?**:Julien is the only technician that can perform the measurements
-**Visibility**:a normal client can see the request he made, a team manager can see his own requests and all the requests created by the members of the team, but a company can not see what other companies requested, only Julien can see all the requests made.
+**Processing stages**: Recieved, started, completed; a request can become impossible if damaged or maybe too small, and Julien must tell the requester and explain for him why?
+**Who performs the measurements?**:Julien alone manages these measurements
+**Visibility**:a PhD student ot a researcher can see the request he made, a team manager can see his own requests and all the requests created by the members of the team, but a company can not see what other companies requested, only Julien can see all the requests made.
 **Editing and cancellation**: the requesters can modify or cancel their request but only BEFORE Julien starts processing the request
 **Results**:Julien can uploads files or tables or images with a comment on the application
 **Accounts**: Researchers and students create their own accounts using their school email address and when they are registering, they pick which of the six research teams they are, Julien chooses one person from each team and assigns him as a manager of the team , Julien also make accounts for company contacts, since he already knows the four partner companies
@@ -23,3 +23,5 @@ we will now do a summary of what we asked Julien and what he told us in order to
 **Unmeasurable samples**: The old request recorded as “not measurable” and the requester has to create a new request for the new replacement sample
 all of this discussion was made with Julien here: https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18
 
+So as a summary, our first idea, before the discussion, was to build an Application to centralize requests, and track the progress of each request
+after this discussion, we understanded that we need to build a request management system complete based on three main features.
