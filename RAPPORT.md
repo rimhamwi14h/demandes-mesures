@@ -56,15 +56,15 @@ and at the end, Julien did not mention that payment or Invoicing are one of the 
 
 ## 3. Decision log
 ### Decision 1 - Combine default priorities with manual ordering
-- **Choice:** Provide a default order that prioritize company requests, followed with the requested dates, while allowing Julien to change the order manually.
-- **Alternative not implemented:** A fixed automatic order that the technician cannot adjust.
-- **Why:** Julien ex'plained that companies have contractual deadlines, but he also needs to organize measurments according to his knowledge of the equipement.
+- **Choice:** By default, company requests comes first then the others by requested date so Julien can reoder the list himself whenever he wants.
+- **Alternative not implemented:** A fixed automatic order that Julien cant touch.
+- **Why:** Companies have conract deadlines, so it makes sens to put them first but julein knows his machines and what he can do in a day, so we didnt want to take that decision away from him.
 - **Evidence:** [Commit 00af1ef — Prioritization, ordering and processing](https://github.com/rimhamwi14h/demandes-mesures/commit/00af1ef) and [the client discussion](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
 
 ### Decision 2 - Enforce access permission in the backend
-- **Choice:** Check permissions in the API and filter requets according to the authenticate user, their role and their team.
-- **Alternative not implemented:** Relying only on hiding unauthorized buttons or pages in the React interface.
-- **Why:** A user can send HTTP request without using the interface. Hiding a button would not prevent unauthorized access. The backend cheks which requests the user can read or modify.A team manager can consult their teams requests but can not modify another members request. Company contacts can access only their own requests. 
+- **Choice:** Befor showing or changing a request, the api checks who is the user, their role and their team.
+- **Alternative not implemented:** Just hiding buttonsand pages in the React interface.
+- **Why:** Hiding a button doesnt stop anyone who talks to the api directly.A company must never see another companys request so the check has to happen on the server, a team manager can see their teams requests and a company only sees its own 
 - **Evidence:** [Commit d28b5c5 — Request management and access filtering](https://github.com/rimhamwi14h/demandes-mesures/commit/d28b5c5), particularly `api/src/requests/requests.service.ts`.
 
 ### Decision 3 - Keep non measurable requests in the history
