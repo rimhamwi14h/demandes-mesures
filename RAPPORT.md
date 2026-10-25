@@ -23,4 +23,3 @@ we will now do a summary of what we asked Julien and what he told us in order to
 **Unmeasurable samples**: The old request recorded as “not measurable” and the requester has to create a new request for the new replacement sample
 all of this discussion was made with Julien here:https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18
 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
