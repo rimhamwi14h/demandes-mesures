@@ -15,7 +15,7 @@ we will now do a summary of what we asked Julien and what he told us in order to
 **Priorities:** Julien decides the order
 **Processing stages**: Recieved, started, completed; a request can become impossible if damaged or maybe too small, and Julien must tell the requester and explain for him why?
 **Who performs the measurements?**:Julien alone manages these measurements
-**Visibility**:a PhD student ot a researcher can see the request he made, a team manager can see his own requests and all the requests created by the members of the team, but a company can not see what other companies requested, only Julien can see all the requests made.
+**Visibility**:a PhD student or a researcher can see the request he made, a team manager can see his own requests and all the requests created by the members of the team, but a company can not see what other companies requested, only Julien can see all the requests made.
 **Editing and cancellation**: the requesters can modify or cancel their request but only BEFORE Julien starts processing the request
 **Results**:Julien can uploads files or tables or images with a comment on the application
 **Accounts**: Researchers and students create their own accounts using their school email address and when they are registering, they pick which of the six research teams they are, Julien chooses one person from each team and assigns him as a manager of the team , Julien also make accounts for company contacts, since he already knows the four partner companies
@@ -24,13 +24,13 @@ we will now do a summary of what we asked Julien and what he told us in order to
 all of this discussion was made with Julien here: https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18
 
 So as a summary, our first idea, before the discussion, was to build an Application to centralize requests, and track the progress of each request
-after this discussion, we understanded that we need to build a request management system complete based on three main features.
+after this discussion, we understood that we need to build a request management system complete based on three main features.
 ## 2. Les trois fonctionnalités
 ### Fonctionnalité 1:Submitting and managing a measurement request
 the goal of this one is to solve the problem of contacting Julien, by this feature, the requesters can directly create requests themselves instead of contacting Julien.
 also, when creating a request, the requester must provide all the infos needed by Julien
 Now after submission, the requester can: view the request and modify its information and cancel it.
-so mainly this feature solved the problem of copying messages onto whiteboard and now every equest contains the necessary information from the beginning
+so mainly this feature solved the problem of copying messages onto whiteboard and now every request contains the necessary information from the beginning
 
 ### Fonctionnalité 2: organizing and processing measurement requests
 This feature is mainly used by Julien himself .
@@ -42,7 +42,7 @@ this feature solved the problem of "ni où j'en suis." he talked about at the be
 unlike feature 2, this is used mainly by requesters and Julien.
 The requesters use it to follow the request progress and retrieve published results and Julien use this one in order to upload the result and after it he maybe add a short comment about his work; at the same time, team managers can follow the requests that belong to their team
 When Julien finishes the work, he can publish the result and the task would be marked as complete, so the requester can directly install the result and there is no need to wait for Julien to send it for him as an email again
-this feature stopped the need of an email back from Julien and that is why we choosed it
+this feature stopped the need of an email back from Julien and that is why we chose it
 and we choosed it also because sending results back can be lost 
 all of these problems are now fixed
 
