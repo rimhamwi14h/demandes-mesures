@@ -53,3 +53,10 @@ payment management feature will require from us an integration with an external 
 and this also require from us hard work to handle failures and all the duplicate transactions
 and the most important thing that it would introduce another business domain
 and at the end, Julien did not mention that payment or Invoicing are one of the problems that he needs from us solving it 
+
+## 3. Decision log
+### Decision 1 - Combine default priorities with manual ordering
+-**Choice:** Provide a default order that prioritizes company requests, followed with the requested dates, while allowing Julien to change the order manually.
+-**Alternative not implemented:** A fixed automatic order that the technician cannot adjust.
+-**Why:** Julien explained that companies have contractual deadlines, but he also needs to organize measurments according to his knowledge of the equipement.
+-**Evidence:** [Commit 00af1ef — Prioritization, ordering and processing](https://github.com/rimhamwi14h/demandes-mesures/commit/00af1ef) and [the client discussion](https://github.com/gaetanmaisse/ismin-web-2026-tps/discussions/18).
